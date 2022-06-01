@@ -7,12 +7,14 @@ namespace PasswordManager
     */
     public class Password
     {
-        protected String password;
+        protected readonly String password;
 
         public Password(int length = 16, bool includeNumbers = true, bool includeUppercase = true, bool includeSymbols = true)
         {
             this.password = generatePassword(length, createValidChars(includeNumbers, includeUppercase, includeSymbols));
         }
+
+        public Password(String password) { this.password = password; }
 
         /*
         * Creates a random String of characters that utilizes a List
@@ -88,12 +90,13 @@ namespace PasswordManager
         * Overrides the toString method in order to return this password
         * as a String
         */
-        public String toString() { return this.password; }
+        override public String ToString() { return this.password; }
 
         /*
         * Overrides the + operator in order to allow this Password to be
         * concatenated onto other Strings 
         */ 
-        public static String operator+(String str) { return  }
+        public static String operator+(Password password, String str) { return password.ToString() + str; }
+        public static String operator+(String str, Password password) { return str + password.ToString(); }
     }
 }
